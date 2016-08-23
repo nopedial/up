@@ -39,3 +39,5 @@ user@box:~$
 ```
 
 setting 'debug' to 'true' will make the daemon run in foreground.
+
+live demo: http://up.arahant.nl
