@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'sinatra', '~> 1.4', '>= 1.4.7'
   s.add_dependency 'thin', '~> 1.6', '>= 1.6.4'
   s.add_dependency 'logger', '~> 1.2', '>= 1.2.8'
+  s.add_dependency 'asetus', '~> 0.3', '>= 0.3.0'
 end
