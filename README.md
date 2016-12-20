@@ -47,7 +47,7 @@ web:
 shafez@up:~$
 ```
 
-files are stored in sub-directories of the defined 'uploads_dir'. these directories can be configured under 'app/times'. up will create the missing directories.
+files are stored in sub-directories of the defined 'app/upload_dir'. these directories can be configured under 'app/times'. up will create the missing directories.
 
 #### Up doesn't remove files - please setup cron to match your configuration
 
