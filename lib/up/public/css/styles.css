@@ -1,3 +1,31 @@
+a:link {
+    font-family: verdana;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #000000;
+}
+
+a:visited {
+    font-family: verdana;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #002f57;
+}
+
+a:hover {
+    font-family: verdana;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #dddddd;
+}
+
+a:active {
+    font-family: verdana;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #000000;
+}
+
 input[type="submit"] {
 	background-color: #002f57;
 	font-family: verdana;
