@@ -21,6 +21,7 @@ end
 
 task :install => [ :validate, :build ] do
   system "sudo -E sh -c \'umask 022; gem install gems/#{file} --no-ri --no-rdoc\'"
+  FileUtils.rm_rf 'gems'
 end
 
 task :clean do

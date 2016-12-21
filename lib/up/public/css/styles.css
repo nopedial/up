@@ -51,7 +51,7 @@ input[type="submit"] {
         color: #ffffff;
         height:50px;
         width:100px;
-	border: 0px;
+	border: 1px solid #002f57;
         border-radius:5px;
         -moz-border-radius:5px;
         -webkit-border-radius:5px;
@@ -64,7 +64,7 @@ input[type="text"] {
         font-family: verdana;
         font-size: 10pt;
         font-weight: normal;
-        color: #000000;
+        color: #7697cc;
         height:30px;
         width:1000px;
         border: 1px solid #7697cc;
@@ -79,9 +79,9 @@ input[type="file"] {
         padding: 10px;
         background-color: #ffffff;
         font-family: verdana;
-        font-size: 12pt;
+        font-size: 10pt;
         font-weight: normal;
-        color: #002f57;
+        color: #7697cc;
         height:500px;
         width:1000px;
         border: 1px solid #7697cc;

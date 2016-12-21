@@ -7,5 +7,6 @@ module Up
   require 'json'
   require 'yaml'
   require 'haml'
+  require 'thread'
   require 'up/web'
 end

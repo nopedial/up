@@ -67,7 +67,7 @@ module Up
     end
 
     def time_verify tm
-      if Cfg.app.times.include?(tm.to_i) or tm.to_i == 0
+      if Cfg.app.times.include?(tm.to_i) or tm.to_i == '0'
         return true
       else
         return false
@@ -89,21 +89,29 @@ module Up
     post '*' do
       if not params['myfile']
         redirect '/help/0'
-      end
-      if not params['myfile'][:filename] =~ /./
+      elsif not params['myfile'][:filename] =~ /./
         fna = [ params['myfile'][:filename], '.txt' ].join('.')
       else
         fna = params['myfile'][:filename].split('.')[-1]
       end
       filename = fn_gen fna.split('.')[-1]
-      if time_verify(params['time'])
-        @time = params['time']
+      if not params['time']
+        @time = '0'
       else
-        @time = 0
+        if time_verify(params['time'])
+          @time = params['time']
+        else
+          @time = '0'
+        end
       end
-      File.open([Cfg.app.upload_dir, '/', @time, '/'].join + filename, 'w') do |f|
+      File.open([ File.join(Cfg.app.upload_dir, @time), '/'].join + filename, 'w') do |f|
         f.write(params['myfile'][:tempfile].read)
       end 
+      tempfile = params['myfile'][:tempfile].path
+      if File::exists?(tempfile)
+        File::delete(tempfile)
+      end
+      Log.debug [ 'redirect -> ', File.join('/uploads', @time.to_s, filename) ].join
       redirect File.join('/uploads', @time.to_s, filename)
     end
 
@@ -117,7 +125,7 @@ module Up
 
     get '/uploads/:time/:filename' do
       begin
-        Log.debug [ Time.now.to_s, File.join('/uploads', params[:time], params[:filename]) ].join(' ') if Cfg.debug
+        Log.debug [ 'GET', File.join('/uploads', params[:time], params[:filename]) ].join(' ') if Cfg.debug
         if Dir.entries([Cfg.app.upload_dir, '/', params[:time], '/'].join).include?(params[:filename])
           send_file [ [Cfg.app.upload_dir, '/', params[:time], '/'].join, params[:filename] ].join
         else
