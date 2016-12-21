@@ -35,6 +35,19 @@ module Up
     set :public_dir, File.dirname(__FILE__) + '/public'
     set :sessions, false
 
+
+    def get_help err, arg=nil
+      case err.to_i
+      when 0 # no file specified #
+        error = 'no file specified.'
+      when 1 # file not found #
+        error = [ 'file not found - ', arg ].join
+      else
+        error = 'unable to process user request.'
+      end
+      return error
+    end
+
     def init_env
       Cfg.app.times.each do |t|
         if not File.exist?(File.join(Cfg.app.upload_dir, t.to_s))
@@ -54,11 +67,17 @@ module Up
     end
 
     def time_verify tm
-      if Cfg.app.times.include?(tm.to_i)
+      if Cfg.app.times.include?(tm.to_i) or tm.to_i == 0
         return true
       else
         return false
       end
+    end
+
+    get '/help/:error' do
+      @filename = get_help params[:error]
+      Log.error [ 'ERROR: ', @filename ].join
+      haml :error
     end
 
     get '/' do
@@ -68,8 +87,11 @@ module Up
     end
 
     post '*' do
+      if not params['myfile']
+        redirect '/help/0'
+      end
       if not params['myfile'][:filename] =~ /./
-        fna = [ params['myfile'][:filename], '.raw' ].join('.')
+        fna = [ params['myfile'][:filename], '.txt' ].join('.')
       else
         fna = params['myfile'][:filename].split('.')[-1]
       end
@@ -77,7 +99,7 @@ module Up
       if time_verify(params['time'])
         @time = params['time']
       else
-        @time = 1
+        @time = 0
       end
       File.open([Cfg.app.upload_dir, '/', @time, '/'].join + filename, 'w') do |f|
         f.write(params['myfile'][:tempfile].read)
@@ -99,7 +121,7 @@ module Up
         if Dir.entries([Cfg.app.upload_dir, '/', params[:time], '/'].join).include?(params[:filename])
           send_file [ [Cfg.app.upload_dir, '/', params[:time], '/'].join, params[:filename] ].join
         else
-          @filename = params[:filename]
+          @filename = get_help(1, params[:filename])
           haml :error
         end
       end

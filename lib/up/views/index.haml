@@ -2,19 +2,18 @@
   %head
     %link(rel="stylesheet" href="css/styles.css")
   %body
-    %center
-      %br
-      %br
-      %br
-      %form(method="post" enctype='multipart/form-data')
-        %input(type='file' name='myfile' class='custom-file-input')
+    #menu
+      %center
+        %a{:title => '', :href => 'https://github.com/nopedial/up'}
+          %img(src="images/GitHub_Logo.png" width=60 height=60)
+    #main
+      %center
+        %form(method="post" enctype='multipart/form-data')
+          %input(type='text' name='time' placeholder='time in minutes: #{@times.join(', ')} - default 0 (keep forever)' class='custom-text-input')
+          %br
+          %input(type='file' name='myfile' class='custom-file-input')
+          %br
+          %br
+          %input(type='submit' value='UPLOAD')
         %br
         %br
-        %input(type='text' name='time' placeholder='time in minutes (#{@times.join(', ')}) - default: 1' class='custom-text-input')
-        %br
-        %br
-        %input(type='submit' value='UPLOAD')
-      %br
-      %br
-      %a{:title => '', :href => 'https://github.com/nopedial/up'}
-        %img(src="images/GitHub_Logo.png" width=80 height=80)
